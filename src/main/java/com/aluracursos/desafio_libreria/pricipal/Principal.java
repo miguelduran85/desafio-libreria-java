@@ -42,7 +42,8 @@ public class Principal {
                     4 - Lista de autores vivos en determinado año
                     5 - Lista de libros por idioma
                     
-                    0 - Salir""";
+                    0 - Salir
+                    ******************************""";
             System.out.println(menu);
             opcion = teclado.nextInt();
             teclado.nextLine();
@@ -60,14 +61,14 @@ public class Principal {
                 case 4:
                     autoresVivos();
                     break;
+                case 5:
+                    busquedaPorIdioma();
+                    break;
                 default:
                     System.out.println("Opción inválida");
             }
         }
     }
-
-
-
 
     private Datos getDatosLibro() {
         System.out.println("escribe el nombre del libro");
@@ -156,5 +157,78 @@ public class Principal {
                 autvivos.forEach(System.out::println);
             }
 
+    }
+
+    private void busquedaPorIdioma() {
+        var opc = -1;
+        while (opc != 0) {
+            System.out.println("""
+                    **********************
+                    * 1) Español (ES)
+                    * 2) Inglés (EN)
+                    * 3) Francés (FR)
+                    * 4) Italiano (IT)
+                    * 5) Portugués (PT)
+                                            
+                    * 0) menú principal
+                                    
+                    Ingrese el número de opción 
+                    """);
+
+            opc = teclado.nextInt();
+            teclado.nextLine();
+            switch (opc){
+                case 1:
+                    libros = libroRepositorio.findByIdiomaContaining("es");
+                    if(!libros.isEmpty()){
+                        libros.stream()
+                                .forEach(System.out::println);
+                    }else {
+                        System.out.println("No tenemos libros registrados");
+                    }
+                    break;
+                case 2:
+                    libros = libroRepositorio.findByIdiomaContaining("en");
+                    if(!libros.isEmpty()){
+                        libros.stream()
+                                .forEach(System.out::println);
+                    }else {
+                        System.out.println("No tenemos libros registrados");
+                    }
+                    break;
+                case 3:
+                    libros = libroRepositorio.findByIdiomaContaining("fr");
+                    if(!libros.isEmpty()){
+                        libros.stream()
+                                .forEach(System.out::println);
+                    }else {
+                        System.out.println("No tenemos libros registrados");
+                    }
+                    break;
+                case 4:
+                    libros = libroRepositorio.findByIdiomaContaining("it");
+                    if(!libros.isEmpty()){
+                        libros.stream()
+                                .forEach(System.out::println);
+                    }else {
+                        System.out.println("No tenemos libros registrados");
+                    }
+                    break;
+                case 5:
+                    libros = libroRepositorio.findByIdiomaContaining("pt");
+                    if(!libros.isEmpty()){
+                        libros.stream()
+                                .forEach(System.out::println);
+                    }else {
+                        System.out.println("No tenemos libros registrados");
+                    }
+                    break;
+                default:
+                    System.out.println("Opción inválida");
+
+
+
+            }
+        }
     }
 }

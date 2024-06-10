@@ -13,7 +13,7 @@ public class Libro{
     private  Long Id;
    @Column(unique = true)
     private String titulo;
-    private  String Idioma;
+    private  String idioma;
     private Double numeroDescargas;
 
     @ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -24,7 +24,7 @@ public class Libro{
     public Libro(){}
     public Libro(DatosLibro datosLibro, Autor autor){
         this.titulo = datosLibro.titulo();
-        this.Idioma = datosLibro.idiomas().toString();
+        this.idioma = datosLibro.idiomas().toString();
         this.numeroDescargas = datosLibro.numeroDescargas();
         this.autor = autor;
     }
@@ -36,7 +36,7 @@ public class Libro{
         return "-----------Libro-----------------"+ '\n'+
                 "* Titulo =" + titulo + '\n' +
                 "* Autor =" + autor + '\n' +
-                "* Idioma='" + Idioma + '\n' +
+                "* Idioma='" + idioma + '\n' +
                 "* numero de descargas=" + numeroDescargas + '\n' +
                  "-----------------------------------------";
     }
@@ -66,11 +66,11 @@ public class Libro{
     }
 
     public String getIdioma() {
-        return Idioma;
+        return idioma;
     }
 
     public void setIdioma(String idioma) {
-        Idioma = idioma;
+        idioma = idioma;
     }
 
     public Autor getAutor() {
