@@ -2,33 +2,45 @@ package com.aluracursos.desafio_libreria.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+
 
 @Entity
 @Table(name = "Libros")
-public class Libro {
+public class Libro{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long Id;
-    @Column(unique = true)
+   @Column(unique = true)
     private String titulo;
     private  String Idioma;
-    private  Integer numeroDescargas;
-    @ManyToMany
-    private Autor autor;
+    private Double numeroDescargas;
+
+    @ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    private  Autor autor;
+
+
+    public Libro(){}
+    public Libro(DatosLibro datosLibro, Autor autor){
+        this.titulo = datosLibro.titulo();
+        this.Idioma = datosLibro.idiomas().toString();
+        this.numeroDescargas = datosLibro.numeroDescargas();
+        this.autor = autor;
+    }
+
+
 
     @Override
     public String toString() {
-        return "Libro{" +
-                ", titulo= '" + titulo + '\'' +
-                ", autor= " + autor.getNombre() +
-                ", Idioma= '" + Idioma + '\'' +
-                ", numeroDescargas= " + numeroDescargas;
+        return "-----------Libro-----------------"+ '\n'+
+                "* Titulo =" + titulo + '\n' +
+                "* Autor =" + autor + '\n' +
+                "* Idioma='" + Idioma + '\n' +
+                "* numero de descargas=" + numeroDescargas + '\n' +
+                 "-----------------------------------------";
     }
 
-    public Libro(){
-    }
     // getters&setters
     public Long getId() {
         return Id;
@@ -41,9 +53,16 @@ public class Libro {
     public String getTitulo() {
         return titulo;
     }
-
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public Double getNumeroDescargas() {
+        return numeroDescargas;
+    }
+
+    public void setNumeroDescargas(Double numeroDescargas) {
+        this.numeroDescargas = numeroDescargas;
     }
 
     public String getIdioma() {
@@ -54,19 +73,15 @@ public class Libro {
         Idioma = idioma;
     }
 
-    public Integer getNumeroDescargas() {
-        return numeroDescargas;
-    }
-
-    public void setNumeroDescargas(Integer numeroDescargas) {
-        this.numeroDescargas = numeroDescargas;
-    }
-
     public Autor getAutor() {
         return autor;
     }
 
     public void setAutor(Autor autor) {
         this.autor = autor;
+        if (autor != null && !autor.getLibro().contains(this)) {
+            autor.getLibro().add(this);
+        }
     }
 }
+
